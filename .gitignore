@@ -1,4 +1,6 @@
 lib.o
 libs.o
+libg.o
 lib.inc
 out
+dbg
