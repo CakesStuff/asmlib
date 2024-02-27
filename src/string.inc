@@ -3,6 +3,3 @@ stdout equ 1
 stderr equ 2
 
 extern strlen
-extern puts
-extern putchar
-extern printf
