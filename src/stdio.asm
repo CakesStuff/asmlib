@@ -61,19 +61,19 @@ section .text
 printf_unsigned:
     enter $56, $0
     %define pos DWORD [rbp - 20]
-    %define number DWORD [rbp - 16]
-    %define radix DWORD [rbp - 4]
+    %define number QWORD [rbp - 16]
+    %define radix QWORD [rbp - 8]
 
     mov pos, 0
-    mov number, edi
-    mov radix, esi
+    mov number, rdi
+    mov radix, rsi
 
 .while:
-    mov eax, number
+    mov rax, number
     mov rdx, 0
     div radix
     
-    mov number, eax
+    mov number, rax
     mov rax, hexChars
     add rax, rdx
     mov al, BYTE [rax]
@@ -87,8 +87,8 @@ printf_unsigned:
     add edx, 1
     mov pos, edx
 
-    mov eax, number
-    cmp eax, 0
+    mov rax, number
+    cmp rax, 0
     jg .while
 
 .loop:
@@ -112,7 +112,7 @@ printf_unsigned:
     ret
 
 printf_signed:
-    cmp edi, 0
+    cmp rdi, 0
     jge .else
     push rsi
     push rdi
@@ -137,7 +137,7 @@ printf:
     %define va_list QWORD [rbp - 8]
     %define va_index QWORD [rbp - 16]
     %define state DWORD [rbp - 24]
-    %define radix DWORD [rbp - 32]
+    %define radix QWORD [rbp - 32]
     %define sign DWORD [rbp - 40]
     %define number DWORD [rbp - 48]
     %define fmt QWORD [rbp - 56]
@@ -255,7 +255,7 @@ printf:
     mov rdi, va_list
     add rdi, va_index
     mov rdi, [rdi]
-    mov esi, radix
+    mov rsi, radix
     cmp sign, 0
     je .unsigned
     call printf_signed
