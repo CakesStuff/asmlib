@@ -8,27 +8,13 @@ stderr equ 2
 section .text
 global strlen
 strlen:
-    enter $16, $0
-    %define len DWORD [rbp - 4]
-    %define str QWORD [rbp - 16]
-
-    mov len, 0
-    mov str, rdi
+    mov rax, 0
 .loop:
-    mov rax, str
-    cmp BYTE [rax], 0
+    cmp BYTE [rdi], 0
     je .exit
 
     add rax, 1
-    mov str, rax
-    mov eax, len
-    add eax, 1
-    mov len, eax
+    add rdi, 1
     jmp .loop
 .exit:
-    mov eax, len
-
-    %undef len
-    %undef str
-    leave
     ret

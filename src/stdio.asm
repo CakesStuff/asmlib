@@ -60,7 +60,7 @@ hexChars: db "0123456789ABCDEF"
 section .text
 printf_unsigned:
     enter $56, $0
-    %define pos DWORD [rbp - 20]
+    %define pos DWORD [rbp - 24]
     %define number QWORD [rbp - 16]
     %define radix QWORD [rbp - 8]
 
