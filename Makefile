@@ -7,6 +7,8 @@ OBJECTS = $(patsubst $(SRC)/%.asm, $(OUT)/%.o, $(SOURCES))
 DBG_OBJS = $(patsubst $(SRC)/%.asm, $(DBG)/%.o, $(SOURCES))
 HEADERS = $(shell find $(SRC)/*.inc)
 
+VERSION = v0.01
+
 all: $(OUT) $(DBG) lib.o libs.o libg.o lib.inc
 
 libs.o: lib.o
@@ -36,6 +38,9 @@ $(OUT):
 $(DBG):
 	mkdir -p $(DBG)
 
+update-stats: lib.o libs.o libg.o
+	size $^ | tail -n +2 | xargs -i printf "{}\t | $(VERSION)\n" >> stats.txt
+
 clean:
 	rm -f lib.o
 	rm -f libs.o
@@ -44,4 +49,4 @@ clean:
 	rm -rf $(OUT)
 	rm -rf $(DBG)
 
-.PHONY: clean all
+.PHONY: clean all update-stats
