@@ -24,7 +24,7 @@ atoi:
 
 .next2:
     cmp BYTE [rdi], '-'
-    jne .retz
+    jne .parse
 
     mov rsi, 1
     add rdi, 1
@@ -35,22 +35,21 @@ atoi:
     ret
 
 .parse:
-    cmp BYTE [rdi], 0
-    je .retn
-
-    mov rdx, rax
-    shl rax, 2
-    add rax, rdx
-    shl rax, 1
-
     mov rdx, 0
     mov dl, BYTE [rdi]
     cmp dl, '0'
     jl .retn
     cmp dl, '9'
     jg .retn
+    
+    mov rcx, rax
+    shl rax, 2
+    add rax, rcx
+    shl rax, 1
 
+    sub dl, '0'
     add rax, rdx
+    add rdi, 1
     jmp .parse
 
 .retn:
