@@ -143,3 +143,19 @@ istoken:
 .reto:
     mov rax, 1
     ret
+
+global strchr
+strchr:
+    cmp BYTE [rdi], 0
+    je .retz
+
+    cmp BYTE [rdi], sil
+    je .retrdi
+
+    add rdi, 1
+    jmp strchr
+.retz:
+    mov rdi, 0
+.retrdi:
+    mov rax, rdi
+    ret

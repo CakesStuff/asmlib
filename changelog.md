@@ -1,6 +1,43 @@
 # Changelog
 
-## v0.01
+## v0.07 *(stable)*
+
+Added:
+1. Stability display and changed order of version numbers.
+1. strchr in [string.asm](src/string.asm)
+
+## v0.06 *(stable)*
+
+Fixed display of errno 0 and added this [changelog](changelog.md)
+
+## v0.05 *(faulty)*
+
+*Bugs:*
+- *errno 0 is displayed incorrectly*
+
+Fixed perror (errno was not inverted) and forgot NULL terminators for the errno strings.
+
+## v0.04 *(unstable)*
+
+*Bugs:*
+- *errno is not inverted,  strerror strings are not **NULL** terminated and errno 0 was displayed incorrectly*
+
+Added:
+1. [errno.inc](src/errno.inc) with errno constants
+1. [errno.asm](src/errno.asm) with strerror (would usually be in string.*) and perror with all strings needed
+
+## v0.03 *(stable)*
+
+added strtok in [string.asm](src/string.asm) and some more constants in [socket.inc](src/socket.inc)
+
+## v0.02 *(stable)*
+
+Just a fix for atoi
+
+## v0.01 *(unstable)*
+
+*Bugs:*
+- *atoi does not work*
 
 First commit with versions.  
 Included:  
@@ -17,25 +54,3 @@ Included:
 1. [ptrace.inc](src/ptrace.inc) with some ptrace constants
 1. [memory.inc](src/memory.inc)/[memory.asm](src/memory.asm) with memcpy
 1. [malloc.inc](src/malloc.inc)/[malloc.asm](src/malloc.asm) with malloc, realloc and free
-
-## v0.02
-
-Just a fix for atoi
-
-## v0.03
-
-added strtok in [string.asm](src/string.asm) and some more constants in [socket.inc](src/socket.inc)
-
-## v0.04
-
-Added:
-1. [errno.inc](src/errno.inc) with errno constants
-1. [errno.asm](src/errno.asm) with strerror (would usually be in string.*) and perror with all strings needed
-
-## v0.05
-
-Fixed perror (errno was not inverted) and forgot NULL terminators for the errno strings.
-
-## v0.06
-
-Fixed display of errno 0 and added this [changelog](changelog.md)
