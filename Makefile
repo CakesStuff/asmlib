@@ -38,7 +38,7 @@ $(OUT):
 $(DBG):
 	mkdir -p $(DBG)
 
-update-stats: lib.o libs.o libg.o
+update-stats: lib.o
 	size $^ | tail -n +2 | xargs -i printf "{}\t | $(VERSION)\n" >> stats.txt
 
 clean:
