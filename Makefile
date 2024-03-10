@@ -7,7 +7,7 @@ OBJECTS = $(patsubst $(SRC)/%.asm, $(OUT)/%.o, $(SOURCES))
 DBG_OBJS = $(patsubst $(SRC)/%.asm, $(DBG)/%.o, $(SOURCES))
 HEADERS = $(shell find $(SRC)/*.inc)
 
-VERSION = v0.04
+VERSION = v0.05
 
 all: $(OUT) $(DBG) lib.o libs.o libg.o lib.inc
 
