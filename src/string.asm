@@ -55,3 +55,91 @@ strcmp:
     add rdi, 1
     add rsi, 1
     jmp strcmp
+
+section .bss
+strtok_str: resq 1
+
+section .text
+global strtok
+strtok:
+    cmp rsi, 0
+    je .retz
+
+    cmp rdi, 0
+    je .first
+
+    mov QWORD [strtok_str], rdi
+.first:
+    mov rdi, QWORD [strtok_str]
+    cmp rdi, 0
+    je .retz
+
+.tok:
+    cmp BYTE [rdi], 0
+    je .retz
+
+    push rdi
+    push rsi
+    mov dil, BYTE [rdi]
+    call istoken
+
+    pop rsi
+    pop rdi
+    cmp rax, 0
+    je .found
+
+    mov BYTE [rdi], 0
+    add rdi, 1
+    jmp .tok
+
+.found:
+    mov QWORD [strtok_str], rdi
+    add rdi, 1
+.loop:
+    cmp BYTE [rdi], 0
+    je .endz
+
+    push rdi
+    push rsi
+    mov dil, BYTE [rdi]
+    call istoken
+
+    pop rsi
+    pop rdi
+    cmp rax, 0
+    jne .end
+
+    add rdi, 1
+    jmp .loop
+
+.end:
+    mov BYTE [rdi], 0
+    mov rax, QWORD [strtok_str]
+    add rdi, 1
+    mov QWORD [strtok_str], rdi
+    ret
+
+.endz:
+    mov rax, QWORD [strtok_str]
+    mov QWORD [strtok_str], 0
+    ret
+
+.retz:
+    mov rax, 0
+    ret
+
+istoken:
+    cmp BYTE [rsi], 0
+    je .retz
+
+    cmp dil, BYTE [rsi]
+    je .reto
+
+    add rsi, 1
+    jmp istoken
+.retz:
+    mov rax, 0
+    ret
+.reto:
+    mov rax, 1
+    ret
