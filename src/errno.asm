@@ -145,7 +145,7 @@ extern printf
 global strerror
 strerror:
     cmp rdi, 0
-    jle .retunknown
+    jl .retunknown
     cmp rdi, 133
     jg .retunknown
 
