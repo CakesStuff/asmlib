@@ -1,3 +1,4 @@
 - README.md with explanation of diff between lib.o libs.o and libg.of
 - Documentation(.md?) with explanation of all functions
 - Deprecation.md explaining breaking changes (along with deprecated next to stability)
+- printf size specifiers
