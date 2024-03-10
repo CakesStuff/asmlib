@@ -2,3 +2,4 @@
 - Documentation(.md?) with explanation of all functions
 - Deprecation.md explaining breaking changes (along with deprecated next to stability)
 - printf size specifiers
+- atol just calls atoi (ud ftw)
