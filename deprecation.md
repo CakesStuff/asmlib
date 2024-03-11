@@ -1,4 +1,4 @@
 | Version | printf size specifiers | malloc(0) works |
 |---------|------------------------|-----------------|
-| latest  | <span color="green">Included</span> | <span color="green">Does not work</span> |
-| depr-c1 | <span color="red">Not Included</span> (uses 64bit) | <span color="red">Can break</span> (if implemented) |
+| latest  | $\color{green}Included$ | $\color{green}Does\space not\space work$ |
+| depr-c1 | $\color{red}Not\space Included$ (uses 64bit) | $\color{red}Can\space break$ (if implemented) |
