@@ -61,3 +61,8 @@ atoi:
     sub rax, rsi
     sub rax, rsi
     ret
+
+global atol
+atol:
+    call atoi
+    ret

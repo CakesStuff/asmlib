@@ -1,0 +1,4 @@
+[submodule "deprecated/depr-c1"]
+	path = deprecated/depr-c1
+	url = https://github.com/CakesStuff/asmlib
+	branch = depr-c1

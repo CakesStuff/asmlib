@@ -306,13 +306,27 @@ init_heap:
 
 global malloc
 malloc:
+    cmp rdi, 0
+    je .retz
+
     mov rsi, rdi
     mov rdi, 0
     call realloc
     ret
+.retz:
+    mov rax, 0
+    ret
 
 global realloc
 realloc:
+    cmp rsi, 0
+    jne .start
+
+    call free
+    mov rax, 0
+    ret
+
+.start:
     enter $40, $0
     %define ptr QWORD [rbp - 8]
     %define size QWORD [rbp - 16]

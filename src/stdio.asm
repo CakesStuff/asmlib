@@ -129,10 +129,14 @@ printf_signed:
 
 %define PRINTF_STATE_NORMAL 0
 %define PRINTF_STATE_SPEC 1
+%define PRINTF_SIZE_SMALL_SMALL 0
+%define PRINTF_SIZE_SMALL 1
+%define PRINTF_SIZE_NORMAL 2
+%define PRINTF_SIZE_LONG 3
 
 global printf
 printf:
-    %define argsize 56
+    %define argsize 64
     enter argsize, $0
     %define va_list QWORD [rbp - 8]
     %define va_index QWORD [rbp - 16]
@@ -141,6 +145,7 @@ printf:
     %define sign DWORD [rbp - 40]
     %define number DWORD [rbp - 48]
     %define fmt QWORD [rbp - 56]
+    %define size QWORD [rbp - 64]
 
     mov va_list, rsp
     add va_list, 16 + argsize
@@ -150,6 +155,7 @@ printf:
     mov sign, 0
     mov number, 0
     mov fmt, rdi
+    mov size, PRINTF_SIZE_NORMAL
 
 .while:
     mov rdi, fmt
@@ -163,6 +169,33 @@ printf:
     jne .default1
 
     mov state, PRINTF_STATE_SPEC
+
+    add rdi, 1
+    cmp BYTE [rdi], 'l'
+    jne .notl
+
+    mov size, PRINTF_SIZE_LONG
+    add fmt, 1
+    jmp .continue
+
+.notl:
+    cmp BYTE [rdi], 'h'
+    jne .noth
+
+    mov size, PRINTF_SIZE_SMALL
+    add fmt, 1
+
+    add rdi, 1
+    cmp BYTE [rdi], 'h'
+    jne .noth
+
+    mov size, PRINTF_SIZE_SMALL_SMALL
+    add fmt, 1
+
+    jmp .continue
+
+.noth:
+    sub rdi, 1
     jmp .continue
 
 .default1:
@@ -255,6 +288,45 @@ printf:
     mov rdi, va_list
     add rdi, va_index
     mov rdi, [rdi]
+
+    cmp size, PRINTF_SIZE_LONG
+    je .size_done
+
+    cmp size, PRINTF_SIZE_NORMAL
+    je .size_normal
+
+    cmp size, PRINTF_SIZE_SMALL
+    je .size_small
+
+    cmp sign, 0
+    je .size_small_small_u
+
+    movsx rdi, dil
+    jmp .size_done
+.size_small_small_u:
+    movzx rdi, dil
+    jmp .size_done
+
+.size_small:
+    cmp sign, 0
+    je .size_small_u
+
+    movsx rdi, di
+    jmp .size_done
+.size_small_u:
+    movzx rdi, di
+    jmp .size_done
+
+.size_normal:
+    cmp sign, 0
+    je .size_normal_u
+
+    movsxd rdi, edi
+    jmp .size_done
+.size_normal_u:
+    mov edi, edi
+
+.size_done:
     mov rsi, radix
     cmp sign, 0
     je .unsigned
@@ -272,6 +344,7 @@ printf:
     mov radix, 10
     mov sign, 0
     mov number, 0
+    mov size, PRINTF_SIZE_NORMAL
 
 .continue:
     mov rdi, fmt
@@ -291,6 +364,7 @@ printf:
     %undef number
     %undef fmt
     %undef argsize
+    %undef size
     leave
     pop rsi
     add rsp, rdi

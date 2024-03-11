@@ -1,23 +1,32 @@
 # Changelog
 
-## v0.07 *(stable)*
+## v0.08 *(stable,latest)*
+
+Breaking changes:
+- malloc now no longer accepts calls of size 0 (realloc frees and returns 0)
+- printf now has size specifiers, previously all specifiers were 64 bit
+
+Changes:
+- atol just calls atoi (ud ftw)
+
+## v0.07 *(stable,depr-c1)*
 
 Added:
 1. Stability display and changed order of version numbers.
 1. strchr in [string.asm](src/string.asm)
 
-## v0.06 *(stable)*
+## v0.06 *(stable,depr-c1)*
 
 Fixed display of errno 0 and added this [changelog](changelog.md)
 
-## v0.05 *(faulty)*
+## v0.05 *(faulty,depr-c1)*
 
 *Bugs:*
 - *errno 0 is displayed incorrectly*
 
 Fixed perror (errno was not inverted) and forgot NULL terminators for the errno strings.
 
-## v0.04 *(unstable)*
+## v0.04 *(unstable,depr-c1)*
 
 *Bugs:*
 - *errno is not inverted,  strerror strings are not **NULL** terminated and errno 0 was displayed incorrectly*
@@ -26,15 +35,15 @@ Added:
 1. [errno.inc](src/errno.inc) with errno constants
 1. [errno.asm](src/errno.asm) with strerror (would usually be in string.*) and perror with all strings needed
 
-## v0.03 *(stable)*
+## v0.03 *(stable,depr-c1)*
 
 added strtok in [string.asm](src/string.asm) and some more constants in [socket.inc](src/socket.inc)
 
-## v0.02 *(stable)*
+## v0.02 *(stable,depr-c1)*
 
 Just a fix for atoi
 
-## v0.01 *(unstable)*
+## v0.01 *(unstable,depr-c1)*
 
 *Bugs:*
 - *atoi does not work*
