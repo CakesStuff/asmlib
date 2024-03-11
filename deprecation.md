@@ -1,9 +1,4 @@
-<style>
-r { color: Red }
-g { color: Green }
-</style>
-
 | Version | printf size specifiers | malloc(0) works |
 |---------|------------------------|-----------------|
-| latest  | <g>Included</g> | <g>Does not work</g> |
-| depr-c1 | <r>Not Included</r> (uses 64bit) | <r>Can break</r> (if implemented) |
+| latest  | <span color="green">Included</span> | <span color="green">Does not work</span> |
+| depr-c1 | <span color="red">Not Included</span> (uses 64bit) | <span color="red">Can break</span> (if implemented) |
