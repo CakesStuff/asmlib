@@ -1,0 +1,3 @@
+extern __errno_location
+extern __prog_tls_location
+extern __prog_tls_size

@@ -158,8 +158,20 @@ strerror:
     mov rax, 0
     ret
 
+extern __errno_location
 global perror
 perror:
+    push rax
+    call __errno_location
+    cmp QWORD [rax], -1
+    mov rsi, QWORD [rax]
+    pop rax
+    je .got_value
+
+    mov rax, 0
+    sub rax, rsi
+
+.got_value:
     mov rsi, rax
     mov rax, 0
     sub rax, rsi

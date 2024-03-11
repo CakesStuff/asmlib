@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.09 *(stable,latest)*
+
+Started threading lib.  
+Added:
+1. Feature in [entry.asm](src/entry.asm) that allocates TLS_SIZE bytes using mmap and sets fs to the result.
+1. [thread.asm](src/thread.asm):
+    1. __errno_location which returns the start of fs
+    1. __prog_tls_location which returns the start of the program tls location
+    1. __prog_tls_size which returns the size of the program tls location
+1. Version number as ELF constant in [entry.asm](src/entry.asm)
+
+Additionally perror was changed to use errno (but only if errno is not -1, then use rax for backwards compatibility)
+
 ## v0.08 *(stable,latest)*
 
 Breaking changes:

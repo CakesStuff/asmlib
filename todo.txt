@@ -1,4 +1,5 @@
-- README.md with explanation of diff between lib.o libs.o and libg.of
+- README.md with explanation of diff between lib.o libs.o and libg.o
 - Documentation(.md?) with explanation of all functions
-- Deprecation.md explaining breaking changes (along with deprecated next to stability)
 - use extra argument to add lld and llu to printf?
+- syscall and errno wrapper, switch perror to __errno_location
+- thread_create
