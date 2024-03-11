@@ -1,5 +1,9 @@
 # Changelog
 
+## detached-list *(stable)*
+
+1. atol: calls atoi
+
 ## v0.07 *(stable)*
 
 Added:
