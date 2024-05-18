@@ -15,6 +15,9 @@ global _start
 extern main
 extern TLS_SIZE
 extern __errno_location
+extern __this_thread_location
+extern __tls_ptr_location
+extern malloc
 
 _start:
     mov rdi, [rsp]
@@ -23,16 +26,8 @@ _start:
     push rdi
     push rsi
 
-    mov rax, SYS_mmap
-    mov rdi, 0
-    mov rsi, TLS_SIZE
-    mov rdx, PROT_READ
-    or rdx, PROT_WRITE
-    mov r10, MAP_ANONYMOUS
-    or r10, MAP_PRIVATE
-    mov r8, -1
-    mov r9, 0
-    syscall
+    mov rdi, TLS_SIZE
+    call malloc
 
     mov rsi, rax
     mov rax, SYS_arch_prctl
@@ -41,6 +36,10 @@ _start:
 
     call __errno_location
     mov QWORD [rax], -1
+    call __this_thread_location
+    mov QWORD [rax], 0
+    call __tls_ptr_location
+    mov QWORD [rax], 0
 
     pop rsi
     pop rdi
@@ -48,5 +47,5 @@ _start:
     call main
 
     mov rdi, rax
-    mov rax, SYS_exit
+    mov rax, SYS_exit_group
     syscall

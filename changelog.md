@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.10 *(stable,latest)*
+
+Finished threading lib.
+Changed:
+1. TLS allocation in [entry.asm](src/entry.asm) now done with malloc
+1. TLS for program now only a pointer to a program defined data structure
+1. main thread in [entry.asm](src/entry.asm) now exits with SYS_exit_group
+Added:
+1. __this_thread_location in [thread.asm](src/thread.asm) returning a thread handle for the current thread
+1. threading in [thread.asm](src/thread.asm):
+    1. thread_create(stack_size, thread_func, thread_arg) which creates a thread
+    1. thread_exit(int retval) which exits the current thread
+    1. thread_join(thread t) which waits for the thread t to exit and returns the exit code of the thread
+    1. thread_join_multiple(thread* ts, int length) which allows the waiting on multiple threads at the same time
+    1. thread_destroy(thread t) which releases the memory used for the thread handle t
+
 ## v0.09 *(stable,latest)*
 
 Started threading lib.  

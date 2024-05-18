@@ -1,3 +1,9 @@
 extern __errno_location
-extern __prog_tls_location
-extern __prog_tls_size
+extern __tls_ptr_location
+extern __this_thread_location
+
+extern thread_create
+extern thread_exit
+extern thread_join
+extern thread_join_multiple
+extern thread_destroy
