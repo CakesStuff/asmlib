@@ -176,6 +176,8 @@ thread_create:;QWORD thread_pointer thread_create(QWORD stack_size, QWORD thread
 
     call __errno_location
     mov QWORD [rax], -1
+    call __tls_ptr_location
+    mov QWORD [rax], 0
 
     pop rdi;thread_location
     call __this_thread_location
@@ -191,6 +193,14 @@ thread_create:;QWORD thread_pointer thread_create(QWORD stack_size, QWORD thread
     mov r12, rdi
     push rax
 
+    call __tls_ptr_location
+    cmp QWORD [rax], 0
+    je .tls_free
+
+    mov rdi, QWORD [rax]
+    call free
+
+.tls_free:
     rdfsbase rdi
     call free
 
@@ -214,9 +224,11 @@ thread_destroy:
     jne .not_finished
 
     call free
-    mov rax, 1
+    mov rax, 0
     ret
 
 .not_finished:
-    mov rax, 0
+    call __errno_location
+    mov QWORD [rax], EBUSY
+    mov rax, -1
     ret

@@ -1,15 +1,27 @@
 # Changelog
 
+## v0.11 *(stable,latest)*
+
+Fixed malloc issue that caused allocation issues for large allocations (at once).
+Added:
+1. [syscall.asm](src/syscall.asm)/[syscalls.inc](src/syscalls.inc) with:  
+    1. the syscall function
+    1. function wrappers for syscalls read, write, exit and _exit.
+Changed:
+1. thread_destroy now returns -1 on failure and sets errno.
+
+Also fixed todo and changelog.
+
 ## v0.10 *(stable,latest)*
 
 Finished threading lib.
 Changed:
 1. TLS allocation in [entry.asm](src/entry.asm) now done with malloc
 1. TLS for program now only a pointer to a program defined data structure
-1. main thread in [entry.asm](src/entry.asm) now exits with SYS_exit_group
-Added:
+1. main thread in [entry.asm](src/entry.asm) now exits with SYS_exit_group  
+Added:  
 1. __this_thread_location in [thread.asm](src/thread.asm) returning a thread handle for the current thread
-1. threading in [thread.asm](src/thread.asm):
+1. threading in [thread.asm](src/thread.asm):  
     1. thread_create(stack_size, thread_func, thread_arg) which creates a thread
     1. thread_exit(int retval) which exits the current thread
     1. thread_join(thread t) which waits for the thread t to exit and returns the exit code of the thread

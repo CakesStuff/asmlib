@@ -2,5 +2,9 @@
 - Documentation(.md?) with explanation of all functions
 - use extra argument to add lld and llu to printf?
 - make printf use sprintf and print buffer
-- thread_create
 - mutex for malloc
+- more syscalls as functions
+- printf add %p
+- threading prevent deadlocks (race conditions?)
+Breaking:
+- printf no longer changes rsp.

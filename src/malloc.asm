@@ -92,13 +92,15 @@ find_space_for:
     cmp QWORD [header.magic_num], MAGIC_NUM
     je .next
 
-    mov rax, 0
+    mov rax, size;because size is subtracted later
     jmp .end
 
 .next:
     mov rax, QWORD [header.heap_addr]
     mov rdi, 0
+    sub rax, size
 .for:
+    add rax, size
     cmp rdi, QWORD [header.allocation_count]
     je .while
 
@@ -108,12 +110,11 @@ find_space_for:
     shr rdi, 4
     mov r10, rsi
     mov rsi, [rsi]
-    sub rsi, size
+    add rax, size
     cmp rax, rsi
     jbe .while
 
     mov rax, rsi
-    add rax, size
     mov rsi, r10
     add rsi, 8
     add rax, [rsi]
@@ -123,7 +124,6 @@ find_space_for:
 .while:
     mov rdi, QWORD [header.heap_addr]
     add rdi, QWORD [header.heap_size]
-    sub rdi, size
     cmp rax, rdi
     jbe .end
 
@@ -138,6 +138,7 @@ find_space_for:
     jmp .while
 
 .end:
+    sub rax, size
     %undef size
     leave
     ret

@@ -273,11 +273,21 @@ printf:
 
 .next6:
     cmp BYTE [rdi], 'o'
-    jne .default2
+    jne .next7
 
     mov radix, 8
     mov sign, 0
     mov number, 1
+    jmp .spec_after
+
+.next7:
+    cmp BYTE [rdi], 'p'
+    jne .default2
+
+    mov radix, 16
+    mov sign, 0
+    mov number, 1
+    mov size, PRINTF_SIZE_LONG
     jmp .spec_after
 
 .default2:
